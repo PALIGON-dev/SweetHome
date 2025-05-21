@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav_graph.xml">
+
+    <fragment
+        android:id="@+id/HomeFragment"
+        android:name="com.example.sweethome.UI.Main.HomeFragment"
+        android:label="Home" >
+        <action
+            android:id="@+id/action_HomeFragment_to_NotificationFragment"
+            app:destination="@id/NotificationFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_SettingsFragment"
+            app:destination="@id/SettingsFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_ProjectFragment"
+            app:destination="@id/ProjectFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ProjectFragment"
+        android:name="com.example.sweethome.UI.Main.ProjectFragment"
+        android:label="Project" >
+        <action
+            android:id="@+id/action_ProjectFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/NotificationFragment"
+        android:name="com.example.sweethome.UI.Main.NotificationFragment"
+        android:label="Notification">
+        <action
+            android:id="@+id/action_NotificationFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment" />
+        <action
+            android:id="@+id/action_NotificationFragment_to_SettingsFragment2"
+            app:destination="@id/SettingsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/SettingsFragment"
+        android:name="com.example.sweethome.UI.Main.SettingsFragment"
+        android:label="Settings">
+        <action
+            android:id="@+id/action_SettingsFragment_to_NotificationFragment"
+            app:destination="@id/NotificationFragment" />
+        <action
+            android:id="@+id/action_SettingsFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment" />
+    </fragment>
+
+</navigation>

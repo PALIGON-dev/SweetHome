@@ -22,15 +22,13 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-    }
+        FirebaseApp.initializeApp(this)
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user == null) {
+            startActivity(Intent(this, AuthActivity::class.java))
+            finish()
+        }
 
-    override fun onStart() {
-        super.onStart()
-            val user = FirebaseAuth.getInstance().currentUser
-            if (user == null) {
-                startActivity(Intent(this, AuthActivity::class.java))
-                finish()
-            }
     }
 
     class App : Application() {

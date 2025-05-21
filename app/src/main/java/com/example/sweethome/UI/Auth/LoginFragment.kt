@@ -63,10 +63,28 @@ class LoginFragment : Fragment() {
                 Toast.makeText(activity, "You need to fill all info", Toast.LENGTH_SHORT).show()
             }
             else {
-                FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-                Toast.makeText(activity, "Account created!", Toast.LENGTH_SHORT).show()
-                EmailIn.text.clear()
-                PasswordIn.text.clear()
+                if (password.length < 6) {
+                    Toast.makeText(
+                        activity,
+                        "Password must be at least 6 characters",
+                        Toast.LENGTH_SHORT).show()
+                } else {
+                    auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Toast.makeText(activity, "Account created!", Toast.LENGTH_SHORT)
+                                    .show()
+                                EmailIn.text.clear()
+                                PasswordIn.text.clear()
+                            } else {
+                                Toast.makeText(
+                                    activity,
+                                    "Registration failed: ${task.exception?.message}",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+                }
             }
         })
 

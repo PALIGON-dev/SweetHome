@@ -41,8 +41,15 @@ class ResetFragment : Fragment() {
                 Toast.makeText(activity, "Enter email", Toast.LENGTH_SHORT).show()
             }
             else {
-            auth.sendPasswordResetEmail(email)
-            Toast.makeText(activity, "Reset message is on it's way", Toast.LENGTH_SHORT).show()
+                auth.sendPasswordResetEmail(email)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(activity, "Reset email sent", Toast.LENGTH_SHORT).show()
+                            findNavController().navigate(R.id.action_reset_to_login)
+                        } else {
+                            Toast.makeText(activity, "Failed to send email: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                        }
+                    }
             findNavController().navigate(R.id.action_reset_to_login)
             }
         })
