@@ -1,14 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/HomeFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.Main.HomeFragment">
+    android:background="#F8FCFB">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.00999999">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/greetingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="84dp"
+            android:layout_weight="1"
+            android:text="Hello, User!"
+            android:textColor="#000000"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_marginStart="24dp"
+            app:layout_marginTop="32dp" />
+
+        <ImageView
+            android:id="@+id/profileImage"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:background="@drawable/circle_background"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_profile_placeholder"
+            app:layout_marginEnd="24dp"
+            app:layout_marginTop="32dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tabContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.28"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.24000001"
+        app:layout_marginStart="24dp"
+        app:layout_marginTop="16dp">
+
+        <TextView
+            android:id="@+id/activeTab"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/tab_active_background"
+            android:gravity="center"
+            android:paddingHorizontal="24dp"
+            android:text="Active"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/archiveTab"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:background="@drawable/tab_inactive_background"
+            android:gravity="center"
+            android:paddingHorizontal="24dp"
+            android:text="Archive"
+            android:textColor="#BDBDBD"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cardRecycler"
+        android:layout_width="413dp"
+        android:layout_height="255dp"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.59000003"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/fabButton"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="348dp"
+        android:layout_marginBottom="80dp"
+        android:backgroundTint="@color/blue"
+        android:contentDescription="Add"
+        android:drawableTop="@drawable/add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_marginBottom="16dp"
+        app:layout_marginStart="24dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
