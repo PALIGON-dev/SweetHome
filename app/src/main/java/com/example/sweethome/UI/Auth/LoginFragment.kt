@@ -2,6 +2,7 @@ package com.example.sweethome.UI.Auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +12,11 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.example.sweethome.Data.Remote.User
 import com.example.sweethome.R
 import com.example.sweethome.UI.Main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class LoginFragment : Fragment() {
@@ -45,6 +48,32 @@ class LoginFragment : Fragment() {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
+                        val firebaseUser = auth.currentUser
+                        val db = FirebaseFirestore.getInstance()
+
+                        firebaseUser?.let { user ->
+                            val userData = User(
+                                id = user.uid,
+                                name = user.displayName ?: "New User",
+                                email = user.email ?: "",
+                                photoUrl = user.photoUrl?.toString(),
+                                projects = emptyList()
+                            )
+
+                            db.collection("users")
+                                .document(user.uid)
+                                .get()
+                                .addOnSuccessListener { snapshot ->
+                                    if (!snapshot.exists()) {
+                                        db.collection("users")
+                                            .document(user.uid)
+                                            .set(userData)
+                                            .addOnSuccessListener { Log.d("Firestore", "User created") }
+                                            .addOnFailureListener { Log.e("Firestore", "Error creating user", it) }
+                                    }
+                                }
+                        }
+
                         val intent = Intent(requireContext(), MainActivity::class.java)
                         startActivity(intent)
                         requireActivity().finish()

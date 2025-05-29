@@ -9,6 +9,7 @@ data class Project(
     val title: String = "",
     val userId: String = "",
     val status: String = "active", //Или archive
+    val state: String = "Private", //Или Commerce
     val address: String = "", // Адрес объекта
     val budget: Double? = null, // Общий бюджет (опционально)
     val serviceTasks: List<Task> = emptyList(), //Обслуживание

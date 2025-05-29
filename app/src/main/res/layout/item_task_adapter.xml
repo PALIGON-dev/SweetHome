@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:layout_marginBottom="12dp"
+    android:layout_marginHorizontal="16dp"
+    android:gravity="center_vertical"
+    android:clipToPadding="false"
+    android:layout_gravity="center"
+    android:backgroundTint="#E0DCDC"
+    android:elevation="2dp"
+    android:clipChildren="false"
+    android:layout_marginTop="4dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:backgroundTintMode="src_in"
+    android:background="@drawable/rounded_background">
+
+    <ImageView
+        android:id="@+id/taskIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/squared_background"
+        android:padding="2dp" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/taskTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Floor works"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/taskProject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="apartment"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+    </LinearLayout>
+</LinearLayout>

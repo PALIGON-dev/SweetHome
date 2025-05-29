@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_nav_graph.xml">
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/NotificationFragment">
 
     <fragment
         android:id="@+id/HomeFragment"
@@ -22,6 +23,9 @@
         android:id="@+id/ProjectFragment"
         android:name="com.example.sweethome.UI.Main.ProjectFragment"
         android:label="Project" >
+        <argument
+            android:name="projectId"
+            app:argType="string" />
         <action
             android:id="@+id/action_ProjectFragment_to_HomeFragment"
             app:destination="@id/HomeFragment" />
