@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".UI.Main.MainActivity$App"
         android:allowBackup="true"
@@ -13,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SweetHome"
         tools:targetApi="31">
+        <activity
+            android:name=".UI.Main.ActivityAddTask"
+            android:exported="false" />
         <activity
             android:name=".UI.Auth.AuthActivity"
             android:exported="false" />
@@ -26,5 +31,5 @@
             </intent-filter>
         </activity>
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
+
 </manifest>

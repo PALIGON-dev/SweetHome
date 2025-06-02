@@ -18,7 +18,7 @@
         android:paddingEnd="24dp">
 
         <ImageButton
-            android:id="@+id/backButton"
+            android:id="@+id/backTaskButton"
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:background="?android:selectableItemBackgroundBorderless"
@@ -50,7 +50,7 @@
 
         <TextView
             android:id="@+id/monthLabel"
-            android:layout_width="0dp"
+            android:layout_width="148dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="May 2025"
@@ -66,15 +66,12 @@
             android:paddingHorizontal="20dp"
             android:text="+ Add Task"
             android:textColor="#FFFFFF" />
+
     </LinearLayout>
 
-    <HorizontalScrollView
-        android:id="@+id/dateScroll"
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:paddingBottom="8dp"
-        android:scrollbars="none" />
+        android:layout_height="71dp" />
 
     <TextView
         android:id="@+id/tasksTitle"

@@ -47,42 +47,4 @@ class HomeFragment : Fragment() {
         recyclerView.adapter = adapt
 
     }
-
-    fun addTestProjectToUser() {
-        val firestore = FirebaseFirestore.getInstance()
-        val auth = FirebaseAuth.getInstance()
-        val currentUser = auth.currentUser
-
-        if (currentUser == null) {
-            Log.e("AddProject", "Пользователь не авторизован")
-            return
-        }
-
-        val newProject = Project(
-            title = "Тестовый проект",
-            userId = currentUser.uid,
-            state = "Private",
-            startAt = Timestamp.now()
-        )
-
-        firestore.collection("projects")
-            .add(newProject)
-            .addOnSuccessListener { documentRef ->
-                val projectId = documentRef.id
-
-                firestore.collection("users").document(currentUser.uid)
-                    .update("projects", FieldValue.arrayUnion(projectId))
-                    .addOnSuccessListener {
-                        Log.d("AddProject", "Проект добавлен и прикреплен к пользователю")
-                    }
-                    .addOnFailureListener { e ->
-                        Log.e(
-                            "AddProject",
-                            "Ошибка при добавлении ID проекта пользователю: ${e.message}"
-                        )
-                    }
-            }
-            .addOnFailureListener { e -> }
-    }
-
 }

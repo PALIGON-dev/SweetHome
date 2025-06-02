@@ -1,11 +1,13 @@
 package com.example.sweethome.UI.Main
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +23,8 @@ class NotificationFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: TaskAdapter
     private val viewModel: TaskViewModel by viewModels()
+    private lateinit var AddTask: Button
+    private lateinit var Back: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +38,7 @@ class NotificationFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter = TaskAdapter(emptyList(), emptyMap())
         recyclerView.adapter = adapter
+        AddTask = view.findViewById(R.id.addTaskButton)
 
         viewModel.tasks.observe(viewLifecycleOwner) { tasks ->
             val projectMap = viewModel.projects.value ?: emptyMap()
@@ -46,35 +51,11 @@ class NotificationFragment : Fragment() {
         }
 
         viewModel.loadUserTasksAndProjects()
+
+        AddTask.setOnClickListener(View.OnClickListener {
+            val intent = Intent(requireContext(), ActivityAddTask::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        })
     }
-
-    fun addTestTaskToProject(projectId: String) {
-        val firestore = FirebaseFirestore.getInstance()
-        val auth = FirebaseAuth.getInstance()
-        val currentUser = auth.currentUser
-
-        if (currentUser == null) {
-            Log.e("AddTask", "Пользователь не авторизован")
-            return
-        }
-
-        val testTask = Task(
-            projectId = projectId,
-            category = "planner",
-            title = "Тестовое задание",
-            text = "Это описание тестового задания",
-            status = "active",
-            date = Timestamp.now()
-        )
-
-        firestore.collection("tasks")
-            .add(testTask)
-            .addOnSuccessListener {
-                Log.d("AddTask", "Тестовое задание добавлено успешно")
-            }
-            .addOnFailureListener { e ->
-                Log.e("AddTask", "Ошибка при добавлении задания: ${e.message}")
-            }
-    }
-
 }
