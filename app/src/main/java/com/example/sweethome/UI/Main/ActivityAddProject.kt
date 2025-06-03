@@ -16,20 +16,22 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.example.sweethome.Data.Remote.Project
 import com.example.sweethome.Data.Remote.Task
 import com.example.sweethome.R
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Locale
 
 
-class ActivityAddTask : AppCompatActivity() {
+class ActivityAddProject : AppCompatActivity() {
 
     private lateinit var Date: EditText
     private lateinit var Title: EditText
-    private lateinit var Project: Spinner
-    private lateinit var Category: Spinner
+    private lateinit var Address: EditText
+    private lateinit var Type: Spinner
     private lateinit var Back: Button
     private lateinit var Add: Button
     private lateinit var viewModel: HomeViewModel
@@ -37,11 +39,11 @@ class ActivityAddTask : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_task)
+        setContentView(R.layout.activity_add_project)
         Date = findViewById(R.id.ProjectEditDate)
         Title = findViewById(R.id.ProjectEditTitle)
-        Project = findViewById(R.id.ProjectTypeSpinner)
-        Category = findViewById(R.id.TaskCategorySpinner)
+        Type = findViewById(R.id.ProjectTypeSpinner)
+        Address = findViewById(R.id.ProjectEditAddress)
         Back = findViewById(R.id.backProjectButton)
         Add = findViewById(R.id.addProjectButton)
 
@@ -52,34 +54,17 @@ class ActivityAddTask : AppCompatActivity() {
             showDatePicker()
         }
         //Установка спинера категорий
-        val categories = listOf("Planner", "Payment", "Service")
+        val categories = listOf("Private", "Commerce")
         val adapter = ArrayAdapter(this, R.layout.spinner_item_white, categories)
         adapter.setDropDownViewResource(R.layout.spinner_item_white)
-        Category.adapter = adapter
-        Category.setPopupBackgroundResource(R.color.white)
-
-        //Установка спинера проектов через LiveData
-        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
-        viewModel.projects.observe(this) { projectList ->
-            val projectNames = projectList.map { it.title }
-            projectIdMap.clear()
-            projectList.forEach { project ->
-                projectIdMap[project.title] = project.id
-            }
-
-            val adapter = ArrayAdapter(this, R.layout.spinner_item_white, projectNames)
-            adapter.setDropDownViewResource(R.layout.spinner_item_white)
-            Project.adapter = adapter
-            Project.setPopupBackgroundResource(R.color.white)
-        }
-        viewModel.loadUserProjects()
+        Type.adapter = adapter
+        Type.setPopupBackgroundResource(R.color.white)
 
         Add.setOnClickListener(View.OnClickListener setOnClickListener@{
             val title = Title.text.toString()
             val dateString = Date.text.toString()
-            val category = Category.selectedItem.toString()
-            val projectName = Project.selectedItem?.toString() ?: return@setOnClickListener
-            val projectId = projectIdMap[projectName] ?: return@setOnClickListener
+            val address = Address.text.toString()
+            val type = Type.selectedItem.toString()
 
             val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
             //Преобразуем String в Date
@@ -93,7 +78,7 @@ class ActivityAddTask : AppCompatActivity() {
             //Преобразуем Date в Timestamp
             if (parsedDate != null && title != "") {
                 val timestamp = Timestamp(parsedDate)
-                addTaskToProject(projectId, title, timestamp, category)
+                addProjectToFirestore(title,address, type, timestamp)
                 Toast.makeText(this, "Task added", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
@@ -132,31 +117,43 @@ class ActivityAddTask : AppCompatActivity() {
         datePickerDialog.show()
     }
 
-    fun addTaskToProject(projectId: String,Title: String, Date: Timestamp, Category: String) {
+    private fun addProjectToFirestore(title: String, address: String, type: String, startDate: Timestamp?) {
         val firestore = FirebaseFirestore.getInstance()
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
 
         if (currentUser == null) {
-            Log.e("AddTask", "Пользователь не авторизован")
+            Log.e("AddProject", "Пользователь не авторизован")
             return
         }
 
-        val testTask = Task(
-            projectId = projectId,
-            category = Category,
-            title = Title,
-            text = "",
+        val newProject = Project(
+            title = title,
+            userId = currentUser.uid,
             status = "active",
-            date = Date
+            state = type,
+            address = address,
+            startAt = startDate
         )
 
-        firestore.collection("tasks")
-            .add(testTask)
-            .addOnSuccessListener {
-            }
-            .addOnFailureListener { e ->
-                Log.e("AddTask", "Ошибка при добавлении задания: ${e.message}")
+        firestore.collection("projects")
+            .add(newProject)
+            .addOnSuccessListener { documentRef ->
+                val projectId = documentRef.id
+                firestore.collection("users")
+                    .document(currentUser.uid)
+                    .update("projects", FieldValue.arrayUnion(projectId))
+                    .addOnSuccessListener {
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e(
+                            "AddProject", "Не удалось добавить проект: ${e.message}"
+                        )
+                    }
+                Toast.makeText(this, "Проект добавлен", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                this.finish()
             }
     }
 }

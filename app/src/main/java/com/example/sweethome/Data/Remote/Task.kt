@@ -12,6 +12,6 @@ data class Task(
     val title: String = "",
     val text: String = "",
     val status: String = "active", //Archive
-    val date: Date? = null, //Дата выполнения
+    val date: Timestamp? = null, //Дата выполнения
     @ServerTimestamp val createdAt: Timestamp? = null, //Дата создания
 )

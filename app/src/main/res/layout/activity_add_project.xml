@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="155dp"
-        android:text="Create new Task"
+        android:text="Create new Project"
         android:textColor="@android:color/white"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -77,9 +77,9 @@
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Project"
-            android:textSize="18dp"
-            android:textColor="@color/white" />
+            android:text="Type"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
 
         <Spinner
             android:id="@+id/ProjectTypeSpinner"
@@ -95,22 +95,25 @@
             android:id="@+id/titleView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Category"
-            android:textSize="18dp"
-            android:textColor="@color/white" />
+            android:text="Address"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
 
-        <Spinner
-            android:id="@+id/TaskCategorySpinner"
+        <EditText
+            android:id="@+id/ProjectEditAddress"
             android:layout_width="match_parent"
-            android:layout_height="56dp" />
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date"
-            android:textSize="18dp"
-            android:textColor="@color/white" />
+            android:text="Start date"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
 
         <EditText
             android:id="@+id/ProjectEditDate"
