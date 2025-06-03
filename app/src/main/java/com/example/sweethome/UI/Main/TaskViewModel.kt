@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.example.sweethome.Data.Remote.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.time.LocalDate
+import java.time.ZoneId
 
 class TaskViewModel : ViewModel() {
     private val firestore = FirebaseFirestore.getInstance()
@@ -50,5 +52,11 @@ class TaskViewModel : ViewModel() {
                 }
                 else{ }
             }
+    }
+
+    fun filterTasksByDate(tasks: List<Task>, selectedDate: LocalDate): List<Task> {
+        return tasks.filter { task ->
+            task.date?.toDate()?.toInstant()?.atZone(ZoneId.systemDefault())?.toLocalDate() == selectedDate
+        }
     }
 }

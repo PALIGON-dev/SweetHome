@@ -70,8 +70,9 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/DateRecycler"
         android:layout_width="match_parent"
-        android:layout_height="71dp" />
+        android:layout_height="80dp" />
 
     <TextView
         android:id="@+id/tasksTitle"
