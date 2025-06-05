@@ -1,15 +1,74 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.Main.ProjectFragment">
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"
-        tools:text="Hello from project" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/blue"
+        app:title="My Project"
+        app:titleTextColor="@android:color/white"
+        app:navigationIcon="@drawable/baseline_density_small_24" />
 
-</FrameLayout>
+    <LinearLayout
+        android:id="@+id/B"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="12dp"
+        android:paddingHorizontal="16dp">
+
+        <Button
+            android:id="@+id/btnPlanner"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="2"
+            android:backgroundTint="#00008B"
+            android:paddingHorizontal="20dp"
+            android:text="Planner"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btnService"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="2"
+            android:backgroundTint="#00008B"
+            android:paddingHorizontal="20dp"
+            android:text="Payments"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btnPayments"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="2"
+            android:backgroundTint="#00008B"
+            android:paddingHorizontal="20dp"
+            android:text="Service"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/addProjectButton2"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:backgroundTint="#00008B"
+            android:paddingHorizontal="20dp"
+            android:text="+"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/taskRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1" />
+
+</LinearLayout>

@@ -58,7 +58,6 @@ class DateAdapter(
         notifyDataSetChanged()
     }
 
-    fun getSelectedDate(): LocalDate = selectedDate
 }
 
 

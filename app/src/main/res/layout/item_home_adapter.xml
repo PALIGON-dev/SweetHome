@@ -20,7 +20,7 @@
 
         <TextView
             android:id="@+id/titleTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
@@ -31,7 +31,7 @@
 
         <TextView
             android:id="@+id/startAtTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="4dp"
             android:text="Start Date"
@@ -40,7 +40,7 @@
 
         <TextView
             android:id="@+id/stateTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="4dp"
             android:text="State"

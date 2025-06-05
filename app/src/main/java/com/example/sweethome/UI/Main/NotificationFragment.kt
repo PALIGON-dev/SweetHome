@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sweethome.Data.Remote.Task
@@ -76,14 +77,12 @@ class NotificationFragment : Fragment() {
         }
 
         addTaskButton.setOnClickListener {
-            val intent = Intent(requireContext(), ActivityAddTask::class.java)
-            startActivity(intent)
-            requireActivity().finish()
+            findNavController().navigate(R.id.action_NotificationFragment_to_addTaskFragment)
         }
     }
 
     private fun updateAdapterForToday() {
-        // Обновляем адаптер, если и задачи, и проекты загружены
+        //Обновляем адаптер, если и задачи, и проекты загружены
         if (allTasks.isNotEmpty() && projectMap.isNotEmpty()) {
             val today = LocalDate.now()
             val todayTasks = viewModel.filterTasksByDate(allTasks, today)
@@ -91,7 +90,7 @@ class NotificationFragment : Fragment() {
         }
     }
 
-    // Возвращает список из 360 дней, 180 до сегодня и 180 после
+    //Возвращает список из 360 дней, 180 до сегодня и 180 после
     private fun generate360Days(): List<LocalDate> {
         val today = LocalDate.now()
         return (-180..180).map { today.plusDays(it.toLong()) }

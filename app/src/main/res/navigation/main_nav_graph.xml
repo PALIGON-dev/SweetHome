@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
     app:startDestination="@id/NotificationFragment">
 
@@ -17,18 +18,9 @@
         <action
             android:id="@+id/action_HomeFragment_to_ProjectFragment"
             app:destination="@id/ProjectFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/ProjectFragment"
-        android:name="com.example.sweethome.UI.Main.ProjectFragment"
-        android:label="Project" >
-        <argument
-            android:name="projectId"
-            app:argType="string" />
         <action
-            android:id="@+id/action_ProjectFragment_to_HomeFragment"
-            app:destination="@id/HomeFragment" />
+            android:id="@+id/action_HomeFragment_to_addProjectFragment"
+            app:destination="@id/addProjectFragment" />
     </fragment>
 
     <fragment
@@ -41,6 +33,9 @@
         <action
             android:id="@+id/action_NotificationFragment_to_SettingsFragment2"
             app:destination="@id/SettingsFragment" />
+        <action
+            android:id="@+id/action_NotificationFragment_to_addTaskFragment"
+            app:destination="@id/addTaskFragment" />
     </fragment>
 
     <fragment
@@ -55,4 +50,42 @@
             app:destination="@id/HomeFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/ProjectFragment"
+        android:name="com.example.sweethome.UI.Main.ProjectFragment"
+        android:label="Project" >
+        <action
+            android:id="@+id/action_ProjectFragment_to_projectBudgetFragment"
+            app:destination="@id/projectBudgetFragment" />
+        <action
+            android:id="@+id/action_ProjectFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/projectBudgetFragment"
+        android:name="com.example.sweethome.UI.Main.ProjectBudgetFragment"
+        android:label="Budget"
+        tools:layout="@layout/fragment_project_budget" >
+        <action
+            android:id="@+id/action_projectBudgetFragment_to_ProjectFragment"
+            app:destination="@id/ProjectFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addTaskFragment"
+        android:name="com.example.sweethome.UI.Main.AddTaskFragment"
+        android:label="fragment_add_task"
+        tools:layout="@layout/fragment_add_task" >
+        <action
+            android:id="@+id/action_addTaskFragment_to_NotificationFragment"
+            app:destination="@id/NotificationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addProjectFragment"
+        android:name="com.example.sweethome.UI.Main.AddProjectFragment"
+        android:label="AddProjectFragment" >
+        <action
+            android:id="@+id/action_addProjectFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment" />
+    </fragment>
 </navigation>

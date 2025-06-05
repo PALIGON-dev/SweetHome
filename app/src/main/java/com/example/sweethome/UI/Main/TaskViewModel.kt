@@ -59,4 +59,8 @@ class TaskViewModel : ViewModel() {
             task.date?.toDate()?.toInstant()?.atZone(ZoneId.systemDefault())?.toLocalDate() == selectedDate
         }
     }
+
+    fun filterTasksByProjectId(projectId: String): List<Task> {
+        return _tasks.value?.filter { it.projectId == projectId } ?: emptyList()
+    }
 }

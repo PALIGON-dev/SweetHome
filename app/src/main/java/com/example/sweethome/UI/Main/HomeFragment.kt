@@ -27,7 +27,7 @@ class HomeFragment : Fragment() {
         val bundle = Bundle().apply {
             putString("projectId", project.id)
         }
-        findNavController().navigate(R.id.ProjectFragment, bundle)
+        findNavController().navigate(R.id.action_HomeFragment_to_ProjectFragment,bundle)
 
     }
 
@@ -52,8 +52,7 @@ class HomeFragment : Fragment() {
         recyclerView.adapter = adapt
 
         addBtn.setOnClickListener(View.OnClickListener {
-            val intent = Intent(requireContext(), ActivityAddProject::class.java)
-            startActivity(intent)//не закрываем активность для обновления списка
+            findNavController().navigate(R.id.action_HomeFragment_to_addProjectFragment)
         })
     }
 

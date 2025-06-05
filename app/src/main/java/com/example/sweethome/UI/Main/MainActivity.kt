@@ -7,12 +7,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.sweethome.R
 import com.example.sweethome.UI.Auth.AuthActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 
@@ -38,8 +40,20 @@ class MainActivity : AppCompatActivity() {
 
         val bottomView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView2) as NavHostFragment
+        val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
+        val navView = findViewById<NavigationView>(R.id.navigationView)
         val navController = navHostFragment.navController
         bottomView.setupWithNavController(navController)
+        navView.setupWithNavController(navController)
+
+        //Включаем Drawer только на фрагменте с деталями проекта
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            val showDrawer = destination.id == R.layout.fragment_project
+            drawerLayout.setDrawerLockMode(
+                if (showDrawer) DrawerLayout.LOCK_MODE_UNLOCKED//Если фрагмент нужный, разблокируем Drawer
+                else DrawerLayout.LOCK_MODE_LOCKED_CLOSED
+            )
+        }
     }
 
     class App : Application() {

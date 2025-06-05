@@ -23,7 +23,7 @@ class UserRepo {
                     return@addOnSuccessListener
                 }
 
-                // Получаем проекты по id
+                //Получаем проекты по id
                 db.collection("projects")
                     .whereIn(FieldPath.documentId(), projectIds)
                     .get()
