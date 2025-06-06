@@ -19,6 +19,9 @@ class TaskViewModel : ViewModel() {
     private val _projects = MutableLiveData<Map<String, String>>()
     val projects: LiveData<Map<String, String>> = _projects
 
+    private val _navigateToProject = MutableLiveData<String?>()
+    val navigateToProject: LiveData<String?> = _navigateToProject
+
     fun loadUserTasksAndProjects() {
         val userId = auth.currentUser?.uid ?: return
 
@@ -53,6 +56,19 @@ class TaskViewModel : ViewModel() {
                 else{ }
             }
     }
+
+    fun updateTaskStatus(task: Task, onComplete: (Task) -> Unit) {
+        val newStatus = if (task.status == "archieve") "active" else "archieve"
+        val updatedTask = task.copy(status = newStatus)//Установили новий статус задачи
+
+        FirebaseFirestore.getInstance().collection("tasks")
+            .document(task.id)
+            .update("status", newStatus)
+            .addOnSuccessListener {
+                onComplete(updatedTask) //Сообщаем адаптеру об успешном обновлении
+            }
+    }
+
 
     fun filterTasksByDate(tasks: List<Task>, selectedDate: LocalDate): List<Task> {
         return tasks.filter { task ->

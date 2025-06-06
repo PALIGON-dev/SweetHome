@@ -40,11 +40,12 @@ class NotificationFragment : Fragment() {
         addTaskButton = view.findViewById(R.id.addProjectButton)
         MonthText = view.findViewById(R.id.monthLabel)
 
-        taskAdapter = TaskAdapter(emptyList(), emptyMap())
+        taskAdapter = TaskAdapter(emptyList(), emptyMap(), viewModel)
         tasksRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = taskAdapter
         }
+
 
         val dates = generate360Days()
         dateAdapter = DateAdapter(dates) { selectedDate ->

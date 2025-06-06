@@ -70,6 +70,9 @@
         <action
             android:id="@+id/action_projectBudgetFragment_to_ProjectFragment"
             app:destination="@id/ProjectFragment" />
+        <action
+            android:id="@+id/action_projectBudgetFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/addTaskFragment"

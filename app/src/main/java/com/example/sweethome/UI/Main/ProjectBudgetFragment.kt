@@ -46,10 +46,13 @@ class ProjectBudgetFragment : Fragment() {
             .setNavigationItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.ProjectFragment -> {
-                        findNavController().navigate(ProjectBudgetFragmentDirections.actionProjectBudgetFragmentToProjectFragment())
+                        findNavController().navigate(R.id.ProjectFragment)
                         true
                     }
-
+                    R.id.HomeFragment -> {
+                        findNavController().navigate(R.id.HomeFragment)
+                        true
+                    }
                     else -> false
                 }
             }

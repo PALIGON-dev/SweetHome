@@ -58,11 +58,15 @@ class ProjectFragment : Fragment() {
                     findNavController().navigate(R.id.projectBudgetFragment, bundle)
                     true
                 }
+                R.id.HomeFragment -> {
+                    findNavController().navigate(R.id.HomeFragment)
+                    true
+                }
                 else -> false
             }
         }
 
-        taskAdapter = TaskAdapter(emptyList(), emptyMap())
+        taskAdapter = TaskAdapter(emptyList(), emptyMap(), viewModel)
         Tasks.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = taskAdapter
