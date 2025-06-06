@@ -16,12 +16,6 @@
         android:theme="@style/Theme.SweetHome"
         tools:targetApi="31">
         <activity
-            android:name=".UI.Main.ActivityAddProject"
-            android:exported="false" />
-        <activity
-            android:name=".UI.Main.ActivityAddTask"
-            android:exported="false" />
-        <activity
             android:name=".UI.Auth.AuthActivity"
             android:exported="false" />
         <activity

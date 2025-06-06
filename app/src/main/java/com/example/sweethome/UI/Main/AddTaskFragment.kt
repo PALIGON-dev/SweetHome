@@ -102,8 +102,6 @@ class AddTaskFragment : Fragment() {
             if (parsedDate != null && title != "") {
                 val timestamp = Timestamp(parsedDate)
                 addTaskToProject(projectId, title, timestamp, category)
-                Toast.makeText(activity, "Task added", Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_addTaskFragment_to_NotificationFragment)
             } else {
                 Log.e("AddTask", "Ошибка парсинга даты")
             }
@@ -158,6 +156,8 @@ class AddTaskFragment : Fragment() {
         firestore.collection("tasks")
             .add(testTask)
             .addOnSuccessListener {
+                findNavController().navigate(R.id.action_addTaskFragment_to_NotificationFragment)
+                Toast.makeText(activity, "Task added", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
                 Log.e("AddTask", "Ошибка при добавлении задания: ${e.message}")

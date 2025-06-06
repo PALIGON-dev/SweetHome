@@ -3,12 +3,12 @@ package com.example.sweethome.UI.Main
 import android.app.Application
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.sweethome.R
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         val bottomView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView2) as NavHostFragment
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
+        val drawerView = findViewById<DrawerLayout>(R.id.drawerLayout)
         val navView = findViewById<NavigationView>(R.id.navigationView)
         val navController = navHostFragment.navController
         bottomView.setupWithNavController(navController)
@@ -48,11 +48,15 @@ class MainActivity : AppCompatActivity() {
 
         //Включаем Drawer только на фрагменте с деталями проекта
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            val showDrawer = destination.id == R.layout.fragment_project
-            drawerLayout.setDrawerLockMode(
-                if (showDrawer) DrawerLayout.LOCK_MODE_UNLOCKED//Если фрагмент нужный, разблокируем Drawer
+            val showDrawer = destination.id == R.id.ProjectFragment || destination.id == R.id.projectBudgetFragment
+            drawerView.setDrawerLockMode(//Если фрагмент нужный, разблокируем Drawer
+                if (showDrawer) DrawerLayout.LOCK_MODE_UNLOCKED
                 else DrawerLayout.LOCK_MODE_LOCKED_CLOSED
             )
+            val showBottomNav = destination.id == R.id.addTaskFragment || destination.id == R.id.addProjectFragment
+                    || destination.id == R.id.ProjectFragment || destination.id == R.id.projectBudgetFragment
+            if (showBottomNav) bottomView.visibility = View.GONE //Если фрагмент нужный, скроем BottomNavigation
+            else bottomView.visibility = View.VISIBLE
         }
     }
 

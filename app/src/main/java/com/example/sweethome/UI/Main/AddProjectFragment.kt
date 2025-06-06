@@ -85,8 +85,6 @@ class AddProjectFragment : Fragment() {
             if (parsedDate != null && title != "") {
                 val timestamp = Timestamp(parsedDate)
                 addProjectToFirestore(title,address, type, timestamp)
-                Toast.makeText(activity, "Task added", Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_addProjectFragment_to_HomeFragment)
             } else {
                 Log.e("AddTask", "Ошибка парсинга даты")
             }
@@ -154,6 +152,7 @@ class AddProjectFragment : Fragment() {
                     }
                 Toast.makeText(activity, "Project added", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.action_addProjectFragment_to_HomeFragment)
+                Toast.makeText(activity, "Task added", Toast.LENGTH_SHORT).show()
             }
     }
 }
