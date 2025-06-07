@@ -1,5 +1,6 @@
 package com.example.sweethome.UI.Main
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,13 +46,28 @@ class HomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.ProjectRecycler)
         val addBtn = view.findViewById<Button>(R.id.addButton)
+        val activeTab = view.findViewById<TextView>(R.id.activeTab)
+        val archiveTab = view.findViewById<TextView>(R.id.archiveTab)
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recyclerView.adapter = adapt
+
+        activeTab.setOnClickListener {
+            viewModel.filterProjectsByState("active")
+            activeTab.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+            archiveTab.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
+        }
+
+        archiveTab.setOnClickListener {
+            viewModel.filterProjectsByState("archive")
+            activeTab.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey))
+            archiveTab.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+        }
 
         addBtn.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.action_HomeFragment_to_addProjectFragment)

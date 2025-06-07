@@ -76,15 +76,15 @@ class ProjectFragment : Fragment() {
 
         viewModel.projects.observe(viewLifecycleOwner) { projects ->
             projectMap = projects
-            updateAdapterForProject(projectId)
+            UpdateAdapterForProject(projectId)
         }
 
         viewModel.tasks.observe(viewLifecycleOwner) {
-            updateAdapterForProject(projectId)
+            UpdateAdapterForProject(projectId)
         }
     }
 
-    fun updateAdapterForProject(projectId: String?) {
+    fun UpdateAdapterForProject(projectId: String?) {
         if (projectId == null) return
         val filteredTasks = viewModel.filterTasksByProjectId(projectId)
         taskAdapter.updateTasks(filteredTasks, projectMap)

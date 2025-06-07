@@ -12,9 +12,17 @@ class HomeViewModel : ViewModel() {
     private val _projects = MutableLiveData<List<Project>>()
     val projects: LiveData<List<Project>> = _projects
 
+    private var allProjects: List<Project> = emptyList()
+
     fun loadUserProjects() {
         userRepository.getCurrentUserProjects { projectList ->
-            _projects.value = projectList
+            allProjects = projectList
+            _projects.value = allProjects
         }
+    }
+
+    fun filterProjectsByState(state: String) {
+        val filtered = allProjects.filter { it.status == state }
+        _projects.value = filtered
     }
 }

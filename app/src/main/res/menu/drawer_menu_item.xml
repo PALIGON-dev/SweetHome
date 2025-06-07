@@ -5,8 +5,8 @@
         android:icon="@drawable/baseline_fact_check_24"/>
     <item
         android:id="@+id/projectBudgetFragment"
-        android:title="Budget"
-        android:icon="@drawable/baseline_account_balance_wallet_24"/>
+        android:title="Settings"
+        android:icon="@drawable/baseline_edit_square_24"/>
     <item
         android:id="@+id/HomeFragment"
         android:title="Back to home page"

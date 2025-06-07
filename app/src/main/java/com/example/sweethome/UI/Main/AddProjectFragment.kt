@@ -127,6 +127,11 @@ class AddProjectFragment : Fragment() {
             return
         }
 
+        if (title.isEmpty() || address.isEmpty() || type.isEmpty() || startDate == null) {
+            Toast.makeText(activity, "All fields must be filled", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val newProject = Project(
             title = title,
             userId = currentUser.uid,
@@ -150,9 +155,9 @@ class AddProjectFragment : Fragment() {
                             "AddProject", "Failed to add project: ${e.message}"
                         )
                     }
-                Toast.makeText(activity, "Project added", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.action_addProjectFragment_to_HomeFragment)
-                Toast.makeText(activity, "Task added", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "Project added", Toast.LENGTH_SHORT).show()
             }
+
     }
 }

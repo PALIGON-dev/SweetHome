@@ -19,9 +19,6 @@ class TaskViewModel : ViewModel() {
     private val _projects = MutableLiveData<Map<String, String>>()
     val projects: LiveData<Map<String, String>> = _projects
 
-    private val _navigateToProject = MutableLiveData<String?>()
-    val navigateToProject: LiveData<String?> = _navigateToProject
-
     fun loadUserTasksAndProjects() {
         val userId = auth.currentUser?.uid ?: return
 

@@ -144,6 +144,10 @@ class AddTaskFragment : Fragment() {
             return
         }
 
+        if (projectId.isEmpty() || Title.isEmpty() || Category.isEmpty()){
+            Toast.makeText(activity, "All fields must be filled", Toast.LENGTH_SHORT).show()
+        }
+
         val testTask = Task(
             projectId = projectId,
             category = Category,

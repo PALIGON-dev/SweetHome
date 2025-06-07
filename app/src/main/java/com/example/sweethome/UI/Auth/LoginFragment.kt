@@ -45,6 +45,10 @@ class LoginFragment : Fragment() {
         LogIn.setOnClickListener(View.OnClickListener {
             var email = EmailIn.text.toString()
             var password = PasswordIn.text.toString()
+            if (email.isEmpty() || password.isEmpty()){
+                Toast.makeText(activity, "You need to fill all info", Toast.LENGTH_SHORT).show()
+                return@OnClickListener
+            }
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -88,7 +92,7 @@ class LoginFragment : Fragment() {
         RegUp.setOnClickListener(View.OnClickListener {
             var email = EmailIn.text.toString()
             var password = PasswordIn.text.toString()
-            if (email.isBlank() || password.isBlank()){
+            if (email.isEmpty() || password.isEmpty()){
                 Toast.makeText(activity, "You need to fill all info", Toast.LENGTH_SHORT).show()
             }
             else {

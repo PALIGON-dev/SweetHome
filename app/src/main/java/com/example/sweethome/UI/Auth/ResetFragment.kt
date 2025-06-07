@@ -37,8 +37,9 @@ class ResetFragment : Fragment() {
 
         ResetBtn.setOnClickListener(View.OnClickListener {
             val email = EmailIn.text.toString()
-            if (email.isBlank()) {
+            if (email.isEmpty()) {
                 Toast.makeText(activity, "Enter email", Toast.LENGTH_SHORT).show()
+                return@OnClickListener
             }
             else {
                 auth.sendPasswordResetEmail(email)
@@ -50,7 +51,6 @@ class ResetFragment : Fragment() {
                             Toast.makeText(activity, "Failed to send email: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                         }
                     }
-            findNavController().navigate(R.id.action_reset_to_login)
             }
         })
 
