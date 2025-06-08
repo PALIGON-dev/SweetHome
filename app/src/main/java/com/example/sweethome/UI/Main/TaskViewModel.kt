@@ -73,7 +73,7 @@ class TaskViewModel : ViewModel() {
         }
     }
 
-    fun filterTasksByProjectId(projectId: String): List<Task> {
-        return _tasks.value?.filter { it.projectId == projectId } ?: emptyList()
+    fun filterTasksByProjectIdAndCategory(projectId: String?, category: String): List<Task> {
+        return _tasks.value?.filter { task -> task.projectId == projectId && task.category.lowercase() == category.lowercase() } ?: emptyList()
     }
 }

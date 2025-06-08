@@ -109,6 +109,7 @@ class ProjectBudgetFragment : Fragment() {
     }
 
     private fun FillInfo(project: Project) {
+        toolbar.title = project.title
         titleEditText.setText(project.title)
         addressEditText.setText(project.address)
         if (project.budget.toString() == "null"){ budgetEditText.setText("0") } else budgetEditText.setText((project.budget).toString())
