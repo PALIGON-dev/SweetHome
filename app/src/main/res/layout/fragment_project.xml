@@ -12,6 +12,7 @@
         android:background="@color/blue"
         app:title="My Project"
         app:titleTextColor="@android:color/white"
+        app:navigationIconTint="@color/white"
         app:navigationIcon="@drawable/baseline_density_small_24" />
 
     <LinearLayout

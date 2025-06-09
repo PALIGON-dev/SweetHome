@@ -46,12 +46,10 @@ class ProjectFragment : Fragment() {
         toolbar = view.findViewById(R.id.toolbar)
         drawerLayout = requireActivity().findViewById(R.id.drawerLayout)
         btnPlanner = view.findViewById(R.id.btnPlanner)
-        btnPayments = view.findViewById(R.id.btnService)
-        btnService = view.findViewById(R.id.btnPayment)
+        btnPayments = view.findViewById(R.id.btnPayment)
+        btnService = view.findViewById(R.id.btnService)
         addBtn = view.findViewById(R.id.addBtn)
         projectId = arguments?.getString("projectId")
-
-        projectId?.let { LoadProject(it) }
 
         toolbar.setNavigationOnClickListener {
             if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -84,33 +82,33 @@ class ProjectFragment : Fragment() {
             adapter = taskAdapter
         }
 
-        viewModel.loadUserTasksAndProjects()
-
         viewModel.tasks.observe(viewLifecycleOwner) {  //Устанавливаем Planner и подписываем на изменения
-            val filteredTasks = viewModel.filterTasksByProjectIdAndCategory(projectId, "Planner")
-            taskAdapter.updateTasks(filteredTasks, viewModel.projects.value ?: emptyMap())
+            updateTasksByCategory("Planner")
         }
 
         btnPlanner.setOnClickListener(View.OnClickListener{
-            val filteredTasks = viewModel.filterTasksByProjectIdAndCategory(projectId, "Planner")
-            taskAdapter.updateTasks(filteredTasks, viewModel.projects.value ?: emptyMap())
+            updateTasksByCategory("Planner")
         })
 
-
         btnPayments.setOnClickListener(View.OnClickListener{
-            val filteredTasks = viewModel.filterTasksByProjectIdAndCategory(projectId, "Payments")
-            taskAdapter.updateTasks(filteredTasks, viewModel.projects.value ?: emptyMap())
+            updateTasksByCategory("Payments")
         })
 
         btnService.setOnClickListener(View.OnClickListener{
-            val filteredTasks = viewModel.filterTasksByProjectIdAndCategory(projectId, "Service")
-            taskAdapter.updateTasks(filteredTasks, viewModel.projects.value ?: emptyMap())
+            updateTasksByCategory("Service")
         })
 
         addBtn.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.addTaskFragment)
         })
     }
+
+    override fun onResume() {
+        super.onResume()
+        projectId?.let { id -> LoadProject(id) }
+        viewModel.loadUserTasksAndProjects()
+    }
+
      fun LoadProject(id: String) {
         firestore.collection("projects").document(id).get()
             .addOnSuccessListener { doc ->
@@ -118,6 +116,7 @@ class ProjectFragment : Fragment() {
                     val project = doc.toObject(Project::class.java)
                     if (project != null) {
                         toolbar.setTitle(project.title)
+                        toolbar.setLogo(R.color.white)
                     }
                 }
             }
@@ -125,5 +124,11 @@ class ProjectFragment : Fragment() {
                 Toast.makeText(requireContext(), "Failed to load project", Toast.LENGTH_SHORT).show()
             }
     }
+
+    private fun updateTasksByCategory(category: String) {
+        val filteredTasks = viewModel.filterTasksByProjectIdAndCategory(projectId, category)
+        taskAdapter.updateTasks(filteredTasks, viewModel.projects.value ?: emptyMap())
+    }
+
 
 }

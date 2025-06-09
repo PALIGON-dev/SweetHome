@@ -1,5 +1,6 @@
 package com.example.sweethome.UI.Main
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -27,6 +28,7 @@ class ProjectBudgetFragment : Fragment() {
     private lateinit var addressEditText: EditText
     private lateinit var budgetEditText: EditText
     private lateinit var saveButton: Button
+    private lateinit var delButton: Button
     private val firestore = FirebaseFirestore.getInstance()
     private lateinit var toolbar: MaterialToolbar
     private lateinit var drawerLayout: DrawerLayout
@@ -51,6 +53,7 @@ class ProjectBudgetFragment : Fragment() {
         addressEditText = view.findViewById(R.id.addressEditText)
         budgetEditText = view.findViewById(R.id.budgetEditText)
         saveButton = view.findViewById(R.id.saveProjectButton)
+        delButton = view.findViewById(R.id.deleteProjectButton)
         projectId = arguments?.getString("projectId")
 
         toolbar.setNavigationOnClickListener {
@@ -90,6 +93,10 @@ class ProjectBudgetFragment : Fragment() {
 
         saveButton.setOnClickListener {
             SaveProject()
+        }
+
+        delButton.setOnClickListener {
+            DeleteProject(projectId)
         }
     }
 
@@ -139,4 +146,38 @@ class ProjectBudgetFragment : Fragment() {
         }
 
     }
+
+    private fun DeleteProject(projectId: String?) {
+        if (projectId == null) return
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("Delete Project")
+            .setMessage("This action will delete project and all tasks. Continue?")
+            .setPositiveButton("Yes") { _, _ ->
+                val batch = firestore.batch()
+                val projectDel = firestore.collection("projects").document(projectId)
+                batch.delete(projectDel)
+                firestore.collection("tasks")
+                    .whereEqualTo("projectId", projectId)
+                    .get().addOnSuccessListener { querySnapshot ->
+                        for (taskDel in querySnapshot.documents) {
+                            batch.delete(taskDel.reference)
+                        }
+                        batch.commit().addOnSuccessListener {
+                                Toast.makeText(requireContext(), "Project deleted", Toast.LENGTH_SHORT).show()
+                                findNavController().navigate(R.id.HomeFragment)
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(requireContext(), "Failed to delete project", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(requireContext(), "Failed to load tasks", Toast.LENGTH_SHORT).show()
+                    }
+            }
+            .setNegativeButton("No", null)
+            .show()
+    }
+
+
 }
