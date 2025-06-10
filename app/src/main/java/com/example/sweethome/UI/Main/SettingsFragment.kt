@@ -39,5 +39,6 @@ class SettingsFragment : Fragment() {
             startActivity(intent)
             requireActivity().finish()
         })
+
     }
 }
